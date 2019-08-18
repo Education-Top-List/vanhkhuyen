@@ -29,14 +29,14 @@ jQuery(document).ready(function(){
 			jQuery(this).fadeOut(300);
 			jQuery("#page_wrapper").addClass('page_wrapper_active');
 			jQuery("#menu_mobile_full").addClass('menu_show').stop().animate({left: "0px"},260);
-			jQuery(".close_menu, .bg_opacity").show();
+			jQuery('.bg_opacity').attr('style','transform: matrix(1, 0, 0, 1, 0, 0);');
 		});
 		jQuery(".close_menu").click(function(){
 			jQuery(".icon_mobile_click").fadeIn(300);
 			jQuery("#menu_mobile_full").animate({left: "-260px"},260).removeClass('menu_show');
 			jQuery("#page_wrapper").removeClass('page_wrapper_active');
 			jQuery(this).hide();
-			jQuery('.bg_opacity').hide();
+			jQuery('.bg_opacity').attr('style','transform: matrix(0, 0, 0, 1, 0, 0);');
 		});
 		jQuery('.bg_opacity').click(function(){
 			jQuery("#menu_mobile_full").animate({left: "-260px"},260).removeClass('menu_show');
@@ -111,14 +111,49 @@ jQuery(document).ready(function(){
 				
 				new WOW().init();
 			}
-			$(".input-effect input").focusout(function(){
-			if($(this).val() != ""){
-				$(this).addClass("has-content");
-			}else{
-				$(this).removeClass("has-content");
-			}
-		})
-
 
 
 		});
+
+$(window).load(function(){
+     $('#loader').slideUp(1200);
+});
+
+document.onreadystatechange = function(e)
+{
+  if(document.readyState=="interactive")
+  {
+    var all = document.getElementsByTagName("*");
+    for (var i=0, max=all.length; i < max; i++) 
+    {
+      set_ele(all[i]);
+    }
+  }
+}
+
+function check_element(ele)
+{
+  var all = document.getElementsByTagName("*");
+  var totalele=all.length;
+  var per_inc=100/all.length;
+  if($(ele).on())
+  {
+    var prog_width=per_inc+Number(document.getElementById("progress_width").value);
+    document.getElementById("progress_width").value=prog_width;
+    $("#bar1").animate({width:prog_width+"%"},10,function(){
+      if(document.getElementById("bar1").style.width=="100%")
+      {
+        $(".progress").fadeOut("slow");
+      }			
+    });
+  }
+  else	
+  {
+    set_ele(ele);
+  }
+}
+
+function set_ele(set_element)
+{
+  check_element(set_element);
+}

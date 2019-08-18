@@ -1,6 +1,16 @@
 
 
 <?php wp_footer(); ?>
+
+<div id="loader" >
+	<img src="<?php echo BASE_URL;?>/images/vanhkhuyen.png">
+</div>
+<div class='progress' id="progress_div">
+    <div class='bar' id='bar1'></div>
+    <div class='percent' id='percent1'></div>
+</div>
+
+  <!--place this at last--><input type="hidden" id="progress_width" value="0">
 <!-- END  MESSENGER -->
 <script src="<?php echo BASE_URL; ?>/js/wow.min.js"></script>
 <script src="<?php echo BASE_URL; ?>/js/slick.js"></script>

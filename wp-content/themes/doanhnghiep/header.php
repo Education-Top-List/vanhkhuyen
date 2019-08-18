@@ -21,8 +21,8 @@
 
 
 <body <?php body_class() ?>>
-	<div class="bg_opacity"></div>
-	<?php if ( wp_is_mobile() ) { ?>
+	<div class="bg_opacity" style="transform: matrix(0, 0, 0, 1, 0, 0);"></div>
+	
 		<div id="menu_mobile_full">
 			<nav class="mobile-menu">
 				<p class="close_menu"><span><i class="fa fa-times" aria-hidden="true"></i></span></p>
@@ -32,11 +32,10 @@
 				<?php wp_nav_menu($args);?>
 			</nav>
 		</div>
-	<?php }?>
+
 	<header class="header">
-		<div class="top_header">
-			<!-- display account top_header mobile -->
-			<span class="icon_mobile_click"><i class="fa fa-bars" aria-hidden="true"></i></span>
+		<div class="icon_mobile_click">
+		<i class="fa fa-bars" aria-hidden="true"></i>
 		</div>
 		<div class="logo_site">
 					<?php 

@@ -2,7 +2,7 @@
 define('BASE_URL', get_template_directory_uri());
 include get_template_directory().'/includes/admin/function-admin.php';
 include get_template_directory().'/includes/admin/core.php';
-//include get_template_directory().'/includes/admin/custom-post-type.php';  
+include get_template_directory().'/includes/admin/custom-post-type.php';  
 include get_template_directory().'/includes/admin/aio-list-categories/aio-list-category.php';  
 
 function load_admin_style() {

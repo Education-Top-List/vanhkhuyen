@@ -5,26 +5,34 @@ Template Name: page-template-trangchu
 get_header(); 
 ?>	
 
-
  <div class="slider3d first">
   <div class="slider3d__wrapper">
     <div class="slider3d__inner">
       <div class="slider3d__rotater">
-        <div class="slider3d__item">
-          <h2 class="slider3d__heading" data-text="SO HEADING">SO HEADING</h2>
+
+                  <?php
+$args = array(  
+  'post_type' => 'adv',
+  'post_status' => 'publish',
+  'posts_per_page' => 20, 
+  'orderby' => 'title', 
+  'order' => 'ASC'
+);
+$loop_slide = new WP_Query( $args ); 
+
+
+
+while ( $loop_slide->have_posts() ) : $loop_slide->the_post(); 
+  ?>
+   <?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' ); ?>
+    <div class="slider3d__item"  style="background:url('<?php echo $image[0]; ?>');">
+          <h2 class="slider3d__heading" data-text="SO HEADING">SO HEADING </h2>
         </div>
-        <div class="slider3d__item">
-          <h2 class="slider3d__heading" data-text="MUCH ROTATION">MUCH ROTATION</h2>
-        </div>
-        <div class="slider3d__item">
-          <h2 class="slider3d__heading" data-text="VERY 3D">VERY 3D</h2>
-        </div>
-        <div class="slider3d__item">
-          <h2 class="slider3d__heading" data-text="SUCH JAVASCRIPT">SUCH JAVASCRIPT</h2>
-        </div>
-        <div class="slider3d__item">
-          <h2 class="slider3d__heading" data-text="WOW WOW!">WOW WOW!</h2>
-        </div>
+    <?php
+endwhile;
+wp_reset_postdata(); 
+?>
+  
       </div>
     </div>
   </div>
@@ -36,7 +44,6 @@ get_header();
           <div class="slider3d__handle__item">Page 2</div>
           <div class="slider3d__handle__item">Page 3</div>
           <div class="slider3d__handle__item">Page 4</div>
-          <div class="slider3d__handle__item">Page 5</div>
         </div>
       </div>
     </div>

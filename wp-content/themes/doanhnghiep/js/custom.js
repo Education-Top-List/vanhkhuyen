@@ -13,7 +13,7 @@ jQuery(document).ready(function(){
 						scrollTop: jQuery("html").offset().top
 					}, 1000);
 				}); 
-		
+
 		// STICKY NAVBAR
 		// var sticky = document.querySelector('.sticky');
 		// if (sticky.style.position !== 'sticky') {
@@ -63,97 +63,63 @@ jQuery(document).ready(function(){
 		jQuery('.mobile-menu ul.menu li').click(function(){
 			$(this).addClass('active').siblings().removeClass('active, editBefore_mobile');
 		});
-		// list_products_categories
-		jQuery('.list_products_categories>ul').children().has('ul.sub_product_category').click(function(){
-			jQuery(this).children('ul').slideToggle();
-			jQuery('.list_products_categories>ul').children().not(this).has('ul.sub_product_category').find('ul.sub_product_category').slideUp();
-		}).children('ul').children().click(function(event){event.stopPropagation()});
-		jQuery('.list_products_categories>ul').children().find('ul.sub_product_category').children().has('ul.sub-menu').click(function(){
-			jQuery(this).find('ul.sub-menu').slideToggle();
-		});
-		jQuery('.list_products_categories ul li').has('ul.sub_product_category').click(function(event){
-			jQuery(this).toggleClass('editBefore_li_product');
-			//event.preventDefault();
-		});
-		jQuery('.list_products_categories ul').children().has('ul.sub_product_category').addClass('menu-item-has-children');
-		jQuery('.list_products_categories ul li').click(function(){
-			jQuery(this).addClass('active').siblings().removeClass('active, editBefore_li_product ');
-		});
+		
+// external JS: masonry.pkgd.js
+
+var $grid = $('.grid').masonry({
+  itemSelector: '.grid-item',
+  columnWidth: 160
+});
+
+$grid.on( 'click', '.grid-item', function() {
+  // change size of item via class
+  $( this ).toggleClass('grid-item--gigante');
+  // trigger layout
+  $grid.masonry();
+});
 
 
-
-			// SHOP POPUP
-			jQuery(".order_now").click(function(e){
-				e.preventDefault();
-				jQuery('.popup_order').modal('show');
-			});
-
-			// SHOP POPUP
-		// jQuery(" .social_ft p").click(function(e){
-		// 	jQuery('.popup_map').stop(true,true).fadeIn('300').find('.close_popup').click(function(){jQuery('.popup_map').stop(true,true).fadeOut('300');
-		// });
-		// 	jQuery('.popup_map').find('.content_popup').show();
-		// 	e.preventDefault();
-		// });
-
-			// jQuery(document).click(function(event) {
- 		//  //if you click on anything except the modal itself or the "open modal" link, close the modal
- 		//  if (!jQuery(event.target).closest(".content_popup, .social_ft p ").length) {
- 		//  	jQuery("body").find(".content_popup").hide();
- 		//  	jQuery(".popup").fadeOut(300);
- 		//  }
- 		// });
-
-
-			var width = jQuery(window).width();
-			if(width>1200){
-			
-				
-				new WOW().init();
-			}
-
-
-		});
+	});
 
 $(window).load(function(){
-     $('#loader').slideUp(1200);
+	$('#loader').slideUp(1200);
 });
 
 document.onreadystatechange = function(e)
 {
-  if(document.readyState=="interactive")
-  {
-    var all = document.getElementsByTagName("*");
-    for (var i=0, max=all.length; i < max; i++) 
-    {
-      set_ele(all[i]);
-    }
-  }
+	if(document.readyState=="interactive")
+	{
+		var all = document.getElementsByTagName("*");
+		for (var i=0, max=all.length; i < max; i++) 
+		{
+			set_ele(all[i]);
+		}
+	}
 }
 
 function check_element(ele)
 {
-  var all = document.getElementsByTagName("*");
-  var totalele=all.length;
-  var per_inc=100/all.length;
-  if($(ele).on())
-  {
-    var prog_width=per_inc+Number(document.getElementById("progress_width").value);
-    document.getElementById("progress_width").value=prog_width;
-    $("#bar1").animate({width:prog_width+"%"},10,function(){
-      if(document.getElementById("bar1").style.width=="100%")
-      {
-        $(".progress").fadeOut("slow");
-      }			
-    });
-  }
-  else	
-  {
-    set_ele(ele);
-  }
+	var all = document.getElementsByTagName("*");
+	var totalele=all.length;
+	var per_inc=100/all.length;
+	if($(ele).on())
+	{
+		var prog_width=per_inc+Number(document.getElementById("progress_width").value);
+		document.getElementById("progress_width").value=prog_width;
+		$("#bar1").animate({width:prog_width+"%"},10,function(){
+			if(document.getElementById("bar1").style.width=="100%")
+			{
+				$(".progress").fadeOut("slow");
+			}			
+		});
+	}
+	else	
+	{
+		set_ele(ele);
+	}
 }
 
 function set_ele(set_element)
 {
-  check_element(set_element);
+	check_element(set_element);
 }

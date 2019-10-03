@@ -581,6 +581,16 @@ function VelvetBluesUU_management_page(){
 }
 add_action('admin_menu', 'VelvetBluesUU_add_management_page');
 add_action('admin_init','VelvetBluesUU_load_textdomain');
+
+// Prevent WP from adding <p> tags on pages
+function disable_wp_auto_p( $content ) {
+  // if ( is_singular( 'page' ) ) {
+  // }
+    remove_filter( 'the_content', 'wpautop' );
+    remove_filter( 'the_excerpt', 'wpautop' );
+  return $content;
+}
+add_filter( 'the_content', 'disable_wp_auto_p', 0 );
 // END SHOW POST COUNT VIEWS
 
 

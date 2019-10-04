@@ -5,9 +5,37 @@ if(have_posts()) :
 	<div id="wrap">
 		<div class="g_content">
 			<div class="container">
-				<div class="breadcrumb">
-					<?php echo the_breadcrumb(); ?>
-				</div>
+				 <?php if('adv' == get_post_type()){ ?>
+      <?php  include(BASE_URL.'/archive-adv.php'); ?>
+    <?php } else { ?>
+             <?php  include(BASE_URL.'/archive.php'); ?>
+    <?php } ?>
+				<?php
+				$args = array(  
+					'post_type' => 'adv',
+					'post_status' => 'publish',
+					'posts_per_page' => 20, 
+					'orderby' => 'title', 
+					'order' => 'ASC'
+				);
+				$loop_slide = new WP_Query( $args ); 
+				while ( $loop_slide->have_posts() ) : $loop_slide->the_post(); 
+					?>
+					<?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' ); ?>
+					<div class="slider3d__item"  style="background:url('<?php echo $image[0]; ?>');">
+						<h2 class="slider3d__heading" data-text="SO HEADING">SO HEADING </h2>
+					</div>
+					<?php
+				endwhile;
+				wp_reset_postdata(); 
+				?>
+				<?php
+				if ( is_post_type_archive() ) {
+					?>
+					<h1><?php echo post_type_archive_title(); ?></h1>
+					<?php
+				}
+				?>
 				<div class="row">
 					<div class="col-md-9 col-sm-3  content_left">
 						<?php 

@@ -26,7 +26,7 @@ while ( $loop_slide->have_posts() ) : $loop_slide->the_post();
   ?>
    <?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' ); ?>
     <div class="slider3d__item"  style="background:url('<?php echo $image[0]; ?>');">
-          <h2 class="slider3d__heading" data-text="SO HEADING">SO HEADING </h2>
+          <h2 class="slider3d__heading" data-text="<?php echo the_title(); ?>"><a href="<?php the_permalink(); ?>"><?php echo the_title(); ?></a> </h2>
         </div>
     <?php
 endwhile;

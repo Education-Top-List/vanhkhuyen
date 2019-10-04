@@ -91,7 +91,7 @@ class Sassy_Social_Share_Admin {
 		}
 
 	}
-
+	
 	/**
 	 * Update options in all the old blogs.
 	 *
@@ -121,7 +121,7 @@ class Sassy_Social_Share_Admin {
 		add_blog_option( $blog_id, 'heateor_sss', $this->options );
 	
 	}
-
+	
 	/**
 	 * Show sharing meta options
 	 *
@@ -669,6 +669,12 @@ class Sassy_Social_Share_Admin {
 				heateor_sss_update_svg_css( $this->options['vertical_font_color_hover'], 'sassy-social-share-hover-svg-vertical' );
 			}
 			
+			if ( version_compare( '3.3', $current_version ) > 0 ) {
+				$this->options['youtube_username'] = '';
+				$this->options['vertical_youtube_username'] = '';
+				update_option( 'heateor_sss', $this->options );
+			}
+
 			if ( version_compare( '3.2.24', $current_version ) > 0 ) {
 				if ( ! $this->options['fb_key'] && ! $this->options['fb_secret'] && $this->options['vertical_fb_key'] && $this->options['vertical_fb_secret'] ) {
 					$this->options['fb_key'] = $this->options['vertical_fb_key'];

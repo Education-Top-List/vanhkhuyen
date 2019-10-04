@@ -7,7 +7,7 @@ function heateorSssDetermineWhatsappShareAPI(a){if(a)return-1!=navigator.userAge
 function heateorSssMoreSharingPopup(elem, postUrl, postTitle, twitterTitle){
 	postUrl = encodeURIComponent(postUrl);
 	concate = '</ul></div><div class="footer-panel"><p></p></div></div>';
-	var heateorSssMoreSharingServices = {
+	var heateorSssMoreSharingServices = {	  
 	  facebook: {
 		title: "Facebook",
 		locale: "en-US",
@@ -258,11 +258,6 @@ function heateorSssMoreSharingPopup(elem, postUrl, postTitle, twitterTitle){
 		title: "Flipboard",
 		locale: "en-US",
 		redirect_url: "https://share.flipboard.com/bookmarklet/popout?v=2&url=" + postUrl + "&title=" + postTitle,
-	  },
-	  mail: {
-		title: "Email",
-		locale: "en-US",
-		redirect_url: "mailto:?subject=" + postTitle + "&body=Link: " + postUrl,
 	  },
 	  pocket: {
 		title: "Pocket",

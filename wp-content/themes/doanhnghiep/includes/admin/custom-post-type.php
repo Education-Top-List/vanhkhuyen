@@ -16,30 +16,34 @@
 /* ADV */
 function tg_contact_custom_post_type_adv() {
 	$labels = array(
-		'name' 				=> 'Slide Index ',
-		'singular_name' 	=> 'Slide Index ',
-		'menu_name'			=> 'Slide Index',
-		'name_admin_bar'	=> 'Slide Index '
+		'name' 				=> 'Slide Index Area ', 
+		'singular_name' 	=> 'Thêm ảnh slide mới',
+		'menu_name'			=> 'Slide Index', // Name of category of top menu in admin and in sidebar left admin
+		'name_admin_bar'	=> 'Slide Index Category '
 	);
 	
 	$args = array(
 		'labels'			=> $labels,
-		'show_ui'			=> true,
-		'show_in_menu'		=> true,
+		'show_in_nav_menus ' => false,
+		'show_ui'			=> true, 
+		'show_in_menu'		=> true, // in sidebar left admin
 		'capability_type'	=> 'post',
+		'has_archive' => true,
 		'hierarchical'		=> false,
 		'menu_position'		=> 25,
 		'menu_icon'			=> 'dashicons-images-alt2',
-		'supports'			=> array( 'title', 'thumbnail' , 'excerpt' ),
+		'public' => true, // required to display permalink under title post
+		'query_var' => true,
+		'publicly_queryable' => true, // permalink
+		'supports'			=> array( 'title', 'thumbnail' , 'excerpt' , 'editor' , 'page-attributes' )
 	);
 
 	register_taxonomy(
 		'slide_index',
 		'adv',
 		array(
-			'label' => __( 'Chuyên mục' ),
-			'rewrite' => array( 'slug' => 'category_adv' ),
-			'hierarchical' => true,
+			'label' => false, // label in menu admin sidebar left
+			'hierarchical' => true
 		)
 	);
 

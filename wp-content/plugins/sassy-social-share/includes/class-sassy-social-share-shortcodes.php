@@ -46,6 +46,71 @@ class Sassy_Social_Share_Shortcodes {
 
 	/** 
 	 * Shortcode for Social Sharing.
+	 */
+	public function follow_icons_shortcode( $params ) {
+
+		extract( shortcode_atts( array(
+			'style' => '',
+			'width' => '32',
+			'height' => '32',
+			'shape' => 'square',
+			'social_networks' => '',
+			'type' => 'standard',
+			'theme' => '',
+			'left' => '0',
+			'right' => '0',
+			'top' => '100',
+			'align' => 'left',
+			'title' => ''
+		), $params ) ); 
+
+		$html = '';
+
+		if ( $social_networks ) {
+			$networks = explode( ',', $social_networks );
+
+			$icon_style = 'width:' . $width . 'px;height:' . $height . 'px;' . ( $shape == 'round' ? 'border-radius:999px;' : '' );
+
+			if ( $theme == '' ) {
+				$icon_theme = $theme;
+			} elseif ( $theme == 'standard' ) {
+				$icon_theme = $theme . '_';
+			} elseif ( $theme == 'floating' ) {
+				$icon_theme = $theme . '_';
+			}
+
+			$html .= '<div ' . ( $type == 'floating' ? 'style="position:fixed;top:' . $top . 'px;' . $align . ':' . $$align . 'px;width:' . $width . 'px;"'  : '' ) .  'class="heateor_sss_' . $icon_theme . 'follow_icons_container">';
+
+
+			if ( ! empty( $title ) ) {
+				if ( $type == 'floating' ) {
+					$html .= '<div class="heateor_sss_follow_icons_title" style="text-align:center;font-size:' . $width*30/100 . 'px">';
+				}
+				$html .= $title;
+				if ( $type == 'floating' ) {
+					$html .= '</div>';
+				}
+			}
+
+			$html .= '<ul class="heateor_sss_follow_ul">';
+			
+			// follow icons
+			foreach ( $networks as $value ) {
+				$networks_link = explode( '=', trim( $value ) );
+				$html .= '<li class="heateorSssSharingRound"><i style="' . $icon_style . '" alt="' . ucfirst( trim( $networks_link[0] ) ) . '" title="' . ucfirst( trim( $networks_link[0] ) ) . '" class="heateorSssSharing heateorSss' . ucfirst( $networks_link[0] ) . 'Background"><a target="_blank" aria-label="' . ucfirst( trim( $networks_link[0] ) ) . '" href="' . trim( $networks_link[1] ) . '" rel="noopener"><ss style="display:block" class="heateorSssSharingSvg heateorSss' . ucfirst( trim( $networks_link[0] ) ) . 'Svg"></ss></a></i></li>';
+			}
+			$html .= '</ul>';
+			$html .= '<div style="clear:both"></div>';
+			$html .= '</div>';
+
+		}
+
+		return $html;
+
+	}
+
+	/** 
+	 * Shortcode for Social Sharing
 	 *
 	 * @since    1.0.0
 	 */ 
@@ -129,7 +194,7 @@ class Sassy_Social_Share_Shortcodes {
 		}
 		$html .= '>';
 		if ( $type == 'standard' && $title != '' ) {
-			$html .= '<div style="font-weight:bold">' . ucfirst( $title ) . '</div>';
+			$html .= '<div class="heateor_sss_sharing_title" style="font-weight:bold">' . ucfirst( $title ) . '</div>';
 		}
 		
 		$html .= $this->public_class_object->prepare_sharing_html( $short_url ? $short_url : $target_url, $type == 'standard' ? 'horizontal' : 'vertical', $count, $total_shares == 'ON' ? 1 : 0 );

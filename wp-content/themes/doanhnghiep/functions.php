@@ -594,4 +594,3 @@ add_filter( 'the_content', 'disable_wp_auto_p', 0 );
 // END SHOW POST COUNT VIEWS
 
 
- 

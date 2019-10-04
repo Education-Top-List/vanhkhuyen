@@ -66,6 +66,17 @@ defined( 'ABSPATH' ) or die("Cheating........Uh!!");
 										$line_height = $sharing_shape == 'rectangle' ? $sharing_height : $sharing_size;
 										?>
 										<style type="text/css">
+										<?php
+										if ( isset( $options['plain_instagram_bg'] ) ) {
+											?>
+											.heateorSssInstagramBackground{background-color:#527fa4}
+											<?php
+										} else {
+											?>
+											.heateorSssInstagramBackground{background:radial-gradient(circle at 30% 107%,#fdf497 0,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285aeb 90%)}
+											<?php
+										}
+										?>
 										#heateor_sss_preview{
 											color:<?php echo $sharing_color ? $sharing_color : "#fff" ?>;
 										}
@@ -126,15 +137,15 @@ defined( 'ABSPATH' ) or die("Cheating........Uh!!");
 								<tr>
 									<th>
 										<img id="heateor_sss_icon_shape_help" class="heateor_sss_help_bubble" src="<?php echo plugins_url( '../../images/info.png', __FILE__ ) ?>" />
-										<label><?php _e("Shape", 'sassy-social-share' ); ?></label>
+										<label><?php _e( "Shape", 'sassy-social-share' ); ?></label>
 									</th>
 									<td>
 										<input id="heateor_sss_icon_round" onclick="tempHorShape = 'round';heateorSssSharingHorizontalPreview()" name="heateor_sss[horizontal_sharing_shape]" type="radio" <?php echo $sharing_shape == 'round' ? 'checked = "checked"' : '';?> value="round" />
-										<label style="margin-right:10px" for="heateor_sss_icon_round"><?php _e("Round", 'sassy-social-share' ); ?></label>
+										<label style="margin-right:10px" for="heateor_sss_icon_round"><?php _e( "Round", 'sassy-social-share' ); ?></label>
 										<input id="heateor_sss_icon_square" onclick="tempHorShape = 'square';heateorSssSharingHorizontalPreview()" name="heateor_sss[horizontal_sharing_shape]" type="radio" <?php echo $sharing_shape == 'square' ? 'checked = "checked"' : '';?> value="square" />
-										<label style="margin-right:10px" for="heateor_sss_icon_square"><?php _e("Square", 'sassy-social-share' ); ?></label>
+										<label style="margin-right:10px" for="heateor_sss_icon_square"><?php _e( "Square", 'sassy-social-share' ); ?></label>
 										<input id="heateor_sss_icon_rectangle" onclick="tempHorShape = 'rectangle';heateorSssSharingHorizontalPreview()" name="heateor_sss[horizontal_sharing_shape]" type="radio" <?php echo $sharing_shape == 'rectangle' ? 'checked = "checked"' : '';?> value="rectangle" />
-										<label for="heateor_sss_icon_rectangle"><?php _e("Rectangle", 'sassy-social-share' ); ?></label>
+										<label for="heateor_sss_icon_rectangle"><?php _e( "Rectangle", 'sassy-social-share' ); ?></label>
 									</td>
 								</tr>
 
@@ -728,6 +739,12 @@ defined( 'ABSPATH' ) or die("Cheating........Uh!!");
 						</tr>
 
 						<?php
+						$youtube_username = '';
+						if ( isset( $options['youtube_username'] ) ) {
+							$youtube_username = $options['youtube_username'];
+						} elseif ( isset( $options['vertical_youtube_username'] ) ) {
+							$youtube_username = $options['vertical_youtube_username'];
+						}
 						$instagram_username = '';
 						if ( isset( $options['instagram_username'] ) ) {
 							$instagram_username = $options['instagram_username'];
@@ -740,8 +757,13 @@ defined( 'ABSPATH' ) or die("Cheating........Uh!!");
 						} elseif ( isset( $options['vertical_comment_container_id'] ) ) {
 							$commentform_container_id = $options['vertical_comment_container_id'];
 						}
+						if ( ! isset( $options['horizontal_re_providers'] ) ) {
+							$options['horizontal_re_providers'] = array();
+						}
+						if ( ! isset( $options['vertical_re_providers'] ) ) {
+							$options['vertical_re_providers'] = array();
+						}
 						?>
-
 						<tbody id="heateor_sss_instagram_options" <?php echo ! isset( $options['horizontal_re_providers'] ) || ! in_array( 'instagram', $options['horizontal_re_providers'] ) ? 'style = "display: none"' : '';?> >
 							<tr>
 								<th>
@@ -761,6 +783,26 @@ defined( 'ABSPATH' ) or die("Cheating........Uh!!");
 								</td>
 							</tr>
 						</tbody>
+
+						<tbody id="heateor_sss_youtube_options" <?php echo ! isset( $options['horizontal_re_providers'] ) || ! in_array( 'youtube', $options['horizontal_re_providers'] ) ? 'style = "display: none"' : '';?> >
+							<tr>
+								<th>
+								<img id="heateor_sss_youtube_username_help" class="heateor_sss_help_bubble" src="<?php echo plugins_url( '../../images/info.png', __FILE__ ) ?>" />
+								<label for="heateor_sss_youtube_username"><?php _e( "Youtube URL", 'sassy-social-share' ); ?></label>
+								</th>
+								<td>
+								<input id="heateor_sss_youtube_username" name="heateor_sss[youtube_username]" type="text" value="<?php echo $youtube_username ?>" />
+								</td>
+							</tr>
+							
+							<tr class="heateor_sss_help_content" id="heateor_sss_youtube_username_help_cont">
+								<td colspan="2">
+								<div>
+								<?php _e( 'Username of the Youtube account you want to redirect users to, on clicking the icon', 'sassy-social-share' ) ?>
+								</div>
+								</td>
+							</tr>
+						</tbody>	
 
 						<tbody id="heateor_sss_comment_options" <?php echo ! isset( $options['horizontal_re_providers'] ) || ! in_array( 'Comment', $options['horizontal_re_providers'] ) ? 'style = "display: none"' : '';?> >
 							<tr>
@@ -783,7 +825,7 @@ defined( 'ABSPATH' ) or die("Cheating........Uh!!");
 						</tbody>
 						<?php
 						$likeButtons = array( 'facebook_share', 'facebook_like', 'facebook_recommend', 'twitter_tweet', 'linkedin_share', 'pinterest_pin', 'buffer_share', 'xing_share', 'yummly_share', 'reddit_badge' );
-						$sharingNetworks = array( 'facebook', 'twitter', 'linkedin', 'print', 'email', 'reddit', 'digg', 'float_it', 'tumblr', 'vkontakte', 'pinterest', 'xing', 'whatsapp', 'instagram', 'yummly', 'buffer', 'AIM', 'Amazon_Wish_List', 'AOL_Mail', 'App.net', 'Balatarin', 'BibSonomy', 'Bitty_Browser', 'Blinklist', 'Blogger_Post', 'BlogMarks', 'Bookmarks.fr', 'Box.net', 'BuddyMarks', 'Care2_News', 'CiteULike', 'Comment', 'Copy_Link', 'Diary.Ru', 'Diaspora', 'Diigo', 'Douban', 'Draugiem', 'DZone', 'Evernote', 'Facebook_Messenger', 'Fark', 'Fintel', 'Flipboard', 'Folkd', 'GentleReader', 'Google_Bookmarks', 'Google_Classroom', 'Google_Gmail', 'Hacker_News', 'Hatena', 'Instapaper', 'Jamespot', 'Kakao', 'Kik', 'Kindle_It', 'Known', 'Line', 'LiveJournal', 'Mail.Ru', 'Mendeley', 'Meneame', 'MeWe', 'mix', 'Mixi', 'MySpace', 'Netvouz', 'Odnoklassniki', 'Outlook.com', 'Papaly', 'Pinboard', 'Plurk', 'Pocket', 'PrintFriendly', 'Protopage_Bookmarks', 'Pusha', 'Qzone', 'Rediff MyPage', 'Refind', 'Renren', 'Sina Weibo', 'SiteJot', 'Skype', 'Slashdot', 'SMS', 'StockTwits', 'Svejo', 'Symbaloo_Feeds', 'Telegram', 'Threema', 'Trello', 'Tuenti', 'Twiddla', 'TypePad_Post', 'Viadeo', 'Viber', 'Wanelo', 'Webnews', 'WordPress', 'Wykop', 'Yahoo_Mail', 'Yoolink' );
+						$sharingNetworks = array( 'facebook', 'twitter', 'linkedin', 'print', 'email', 'reddit', 'digg', 'float_it', 'tumblr', 'vkontakte', 'pinterest', 'xing', 'whatsapp', 'instagram', 'yummly', 'buffer', 'AIM', 'Amazon_Wish_List', 'AOL_Mail', 'App.net', 'Balatarin', 'BibSonomy', 'Bitty_Browser', 'Blinklist', 'Blogger_Post', 'BlogMarks', 'Bookmarks.fr', 'Box.net', 'BuddyMarks', 'Care2_News', 'CiteULike', 'Comment', 'Copy_Link', 'Diary.Ru', 'Diaspora', 'Diigo', 'Douban', 'Draugiem', 'DZone', 'Evernote', 'Facebook_Messenger', 'Fark', 'Fintel', 'Flipboard', 'Folkd', 'GentleReader', 'Google_Bookmarks', 'Google_Classroom', 'Google_Gmail', 'Hacker_News', 'Hatena', 'Instapaper', 'Jamespot', 'Kakao', 'Kik', 'Kindle_It', 'Known', 'Line', 'LiveJournal', 'Mail.Ru', 'Mendeley', 'Meneame', 'MeWe', 'mix', 'Mixi', 'MySpace', 'Netvouz', 'Odnoklassniki', 'Outlook.com', 'Papaly', 'Pinboard', 'Plurk', 'Pocket', 'PrintFriendly', 'Protopage_Bookmarks', 'Pusha', 'Qzone', 'Rediff MyPage', 'Refind', 'Renren', 'Sina Weibo', 'SiteJot', 'Skype', 'Slashdot', 'SMS', 'StockTwits', 'Svejo', 'Symbaloo_Feeds', 'Telegram', 'Threema', 'Trello', 'Tuenti', 'Twiddla', 'TypePad_Post', 'Viadeo', 'Viber', 'Wanelo', 'Webnews', 'WordPress', 'Wykop', 'Yahoo_Mail', 'Yoolink','youtube',);
 						?>
 
 						<tr>
@@ -811,19 +853,25 @@ defined( 'ABSPATH' ) or die("Cheating........Uh!!");
 							var heateorSssHorSharingStyle = '<?php echo $horSharingStyle ?>', heateorSssHorDeliciousRadius = '<?php echo $horDeliciousRadius ?>', heateorSssLikeButtons = ["<?php echo implode( '","', $likeButtons) ?>"];
 							</script>
 							<style type="text/css">
+							<?php if ( $horizontal_bg != '' ) { ?>
+								ul#heateor_sss_rearrange i.heateorSssInstagramBackground{background:<?php echo $horizontal_bg ?>!important;}
+							<?php } 
+							if ( $horizontal_bg_hover != '' ) { ?>
+								ul#heateor_sss_rearrange i.heateorSssInstagramBackground:hover{background:<?php echo $horizontal_bg_hover ?>!important;}
+							<?php } ?>
 							.heateorSssSharingBackground{
-								<?php if ( $horizontal_bg) { ?>
+								<?php if ( $horizontal_bg ) { ?>
 								background-color: <?php echo $horizontal_bg ?>;
-								<?php }if ( $border_width) { ?>
+								<?php } if ( $border_width ) { ?>
 								border-width: <?php echo $border_width ?>px;
 								border-style: solid;
 								<?php } ?>
 								border-color: <?php echo $border_color ? $border_color : 'transparent'; ?>;
 							}
 							.heateorSssSharingBackground:hover{
-								<?php if ( $horizontal_bg_hover) { ?>
+								<?php if ( $horizontal_bg_hover ) { ?>
 								background-color: <?php echo $horizontal_bg_hover ?>;
-								<?php }if ( $border_width_hover) { ?>
+								<?php }if ( $border_width_hover ) { ?>
 								border-width: <?php echo $border_width_hover ?>px;
 								border-style: solid;
 								<?php } ?>
@@ -1164,7 +1212,27 @@ defined( 'ABSPATH' ) or die("Cheating........Uh!!");
 								</td>
 							</tr>
 						</tbody>
+						<tbody id="heateor_sss_vertical_youtube_options" <?php echo ! in_array( 'youtube', $options['vertical_re_providers'] ) ? 'style = "display: none"' : '';?> >
+						<tr>
+								<th>
+								<img id="heateor_sss_vertical_youtube_username_help" class="heateor_sss_help_bubble" src="<?php echo plugins_url( '../../images/info.png', __FILE__ ) ?>" />
+								<label for="heateor_sss_vertical_youtube_username"><?php _e( "Youtube URL", 'sassy-social-share' ); ?></label>
+								</th>
+								<td>
+									
 
+								<input id="heateor_sss_vertical_youtube_username" name="heateor_sss[vertical_youtube_username]" type="text" value="<?php echo $youtube_username ?>" />
+								</td>
+							</tr>
+							
+							<tr class="heateor_sss_help_content" id="heateor_sss_vertical_instagram_username_help_cont">
+								<td colspan="2">
+								<div>
+								<?php _e( 'Username of the Instagram account you want to redirect users to, on clicking the icon', 'sassy-social-share' ) ?>
+								</div>
+								</td>
+							</tr>
+						</tbody>
 						<tbody id="heateor_sss_vertical_comment_options" <?php echo ! in_array( 'Comment', $options['vertical_re_providers'] ) ? 'style = "display: none"' : '';?> >
 							<tr>
 								<th>
@@ -1208,8 +1276,14 @@ defined( 'ABSPATH' ) or die("Cheating........Uh!!");
 							var heateorSssVerticalSharingStyle = '<?php echo $verticalSharingStyle ?>', heateorSssVerticalDeliciousRadius = '<?php echo $verticalDeliciousRadius ?>';
 							</script>
 							<style type="text/css">
+							<?php if ( $options['vertical_bg_color_default'] != '' ) {?>
+								ul#heateor_sss_vertical_rearrange  i.heateorSssInstagramBackground{background:<?php echo $vertical_bg ?>!important;}
+							<?php }
+							if ( $options['vertical_bg_color_hover'] != '' ) { ?>
+								ul#heateor_sss_vertical_rearrange i.heateorSssInstagramBackground:hover{background:<?php echo $vertical_bg_hover ?>!important;}
+							<?php } ?>
 							.heateorSssVerticalSharingBackground{
-								<?php if ( $vertical_bg) { ?>
+								<?php if ( $vertical_bg ) { ?>
 								background-color: <?php echo $vertical_bg ?>;
 								<?php }if ( $vertical_border_width) { ?>
 								border-width: <?php echo $vertical_border_width ?>px;
@@ -1218,9 +1292,9 @@ defined( 'ABSPATH' ) or die("Cheating........Uh!!");
 								border-color: <?php echo $vertical_border_color ? $vertical_border_color : 'transparent'; ?>;
 							}
 							.heateorSssVerticalSharingBackground:hover{
-								<?php if ( $vertical_bg_hover) { ?>
+								<?php if ( $vertical_bg_hover ) { ?>
 								background-color: <?php echo $vertical_bg_hover ?>;
-								<?php }if ( $vertical_border_width_hover) { ?>
+								<?php } if ( $vertical_border_width_hover ) { ?>
 								border-width: <?php echo $vertical_border_width_hover ?>px;
 								border-style: solid;
 								<?php } ?>
@@ -1232,8 +1306,8 @@ defined( 'ABSPATH' ) or die("Cheating........Uh!!");
 								if ( isset( $options['vertical_re_providers'] ) ) {
 									foreach ( $options['vertical_re_providers'] as $rearrange ) {
 										?>
-										<li title="<?php echo ucfirst( str_replace( '_', ' ', $rearrange ) ) ?>" id="heateor_sss_re_vertical_<?php echo str_replace( array( ' ', '.' ), '_', $rearrange) ?>" >
-										<i style="display:block;<?php echo $verticalSharingStyle ?>" class="<?php echo in_array( $rearrange, $likeButtons) ? '' : 'heateorSssVerticalSharingBackground' ?> heateorSss<?php echo ucfirst(str_replace( array( '_', '.', ' ' ), '', $rearrange) ) ?>Background"><div class="heateorSssSharingSvg heateorSss<?php echo ucfirst(str_replace( array( '_', '.', ' ' ), '', $rearrange ) ) ?>Svg" style="<?php echo $verticalDeliciousRadius ?>"></div></i>
+										<li title="<?php echo ucfirst( str_replace( '_', ' ', $rearrange ) ) ?>" id="heateor_sss_re_vertical_<?php echo str_replace( array( ' ', '.' ), '_', $rearrange ) ?>" >
+										<i style="display:block;<?php echo $verticalSharingStyle ?>" class="<?php echo in_array( $rearrange, $likeButtons ) ? '' : 'heateorSssVerticalSharingBackground' ?> heateorSss<?php echo ucfirst( str_replace( array( '_', '.', ' ' ), '', $rearrange ) ) ?>Background"><div class="heateorSssSharingSvg heateorSss<?php echo ucfirst( str_replace( array( '_', '.', ' ' ), '', $rearrange ) ) ?>Svg" style="<?php echo $verticalDeliciousRadius ?>"></div></i>
 										<input type="hidden" name="heateor_sss[vertical_re_providers][]" value="<?php echo $rearrange ?>">
 										</li>
 										<?php
@@ -1662,6 +1736,42 @@ defined( 'ABSPATH' ) or die("Cheating........Uh!!");
 					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="form-table editcomment menu_content_table">
 						<tr>
 							<th>
+							<img id="heateor_sss_insta_bg_help" class="heateor_sss_help_bubble" src="<?php echo plugins_url( '../../images/info.png', __FILE__ ) ?>" />
+							<label for="heateor_sss_insta_bg"><?php _e( "Use plain background for Instagram icon", 'sassy-social-share' ) ?></label>
+							</th>
+							<td>
+							<input id="heateor_sss_insta_bg" name="heateor_sss[plain_instagram_bg]" type="checkbox" <?php echo isset( $options['plain_instagram_bg'] ) ? 'checked = "checked"' : '';?> value="1" />
+							</td>
+						</tr>
+
+						<tr class="heateor_sss_help_content" id="heateor_sss_insta_bg_help_cont">
+							<td colspan="2">
+							<div>
+							<?php _e( 'Uses plain background for Instagram icon instead of multicolored background', 'sassy-social-share' ) ?>
+							</div>
+							</td>
+						</tr>
+
+						<tr>
+							<th>
+							<img id="heateor_sss_footer_script_help" class="heateor_sss_help_bubble" src="<?php echo plugins_url( '../../images/info.png', __FILE__ ) ?>" />
+							<label for="heateor_sss_footer_script"><?php _e( "Load Javascript files in footer", 'sassy-social-share' ) ?></label>
+							</th>
+							<td>
+							<input id="heateor_sss_footer_script" name="heateor_sss[footer_script]" type="checkbox" <?php echo isset( $options['footer_script'] ) ? 'checked = "checked"' : '';?> value="1" />
+							</td>
+						</tr>
+
+						<tr class="heateor_sss_help_content" id="heateor_sss_footer_script_help_cont">
+							<td colspan="2">
+							<div>
+							<?php _e( 'If enabled (recommended), Javascript files will be included in the footer of your website.', 'sassy-social-share' ) ?>
+							</div>
+							</td>
+						</tr>
+
+						<tr>
+							<th>
 							<img id="heateor_sss_footer_script_help" class="heateor_sss_help_bubble" src="<?php echo plugins_url( '../../images/info.png', __FILE__ ) ?>" />
 							<label for="heateor_sss_footer_script"><?php _e( "Load Javascript files in footer", 'sassy-social-share' ) ?></label>
 							</th>
@@ -1859,7 +1969,7 @@ defined( 'ABSPATH' ) or die("Cheating........Uh!!");
 							<label for="heateor_sss_sc_language"><?php _e("Language", 'sassy-social-share' ); ?></label>
 							</th>
 							<td>
-							<input id="heateor_sss_sc_language" name="heateor_sss[language]" type="text" value="<?php echo $this->options['language'] ? $this->options['language'] : '' ?>" />
+							<input id="heateor_sss_sc_language" name="heateor_sss[language]" type="text" value="<?php echo $options['language'] ? $options['language'] : '' ?>" />
 							</td>
 						</tr>
 						
@@ -2007,7 +2117,8 @@ defined( 'ABSPATH' ) or die("Cheating........Uh!!");
 				<div class="stuffbox">
 					<h3><label><?php _e( 'Shortcode & Widget', 'sassy-social-share' );?></label></h3>
 					<div class="inside" style="padding-left:7px">
-						<p><a style="text-decoration:none" href="http://support.heateor.com/sassy-social-share-shortcode-and-widget" target="_blank"><?php _e( 'Shortcode & Widget', 'sassy-social-share' ) ?></a></p>
+						<p><a style="text-decoration:none" href="http://support.heateor.com/sassy-social-share-shortcode-and-widget" target="_blank"><?php _e( 'Social Share Shortcode & Widget', 'sassy-social-share' ) ?></a></p>
+						<p><a style="text-decoration:none" href="http://support.heateor.com/sassy-follow-icons-shortcode" target="_blank"><?php _e( 'Follow Icons Shortcode & Widget', 'sassy-social-share' ) ?></a></p>
 					</div>
 				</div>
 				</div>
@@ -2084,6 +2195,7 @@ defined( 'ABSPATH' ) or die("Cheating........Uh!!");
 				echo sprintf( __( 'You can appreciate the effort put in this free plugin by rating it <a href="%s" target="_blank">here</a>', 'sassy-social-share' ), 'https://wordpress.org/support/view/plugin-reviews/sassy-social-share' );
 				?>
 			</p>
+			<a href="https://easy.roihunter.com/?referralCode=KWna_YiwQ_Iic4_y1u2" target="_blank"><img style="width:800px;margin-top:7px;" src="<?php echo plugins_url('../../images/roihunter.png', __FILE__) ?>" /></a>
 			</form>
 
 			<div class="stuffbox">

@@ -67,19 +67,27 @@ jQuery(document).ready(function(){
 // external JS: masonry.pkgd.js
 
 var $grid = $('.grid').masonry({
-  itemSelector: '.grid-item',
-  columnWidth: 160
+	itemSelector: '.grid-item',
+	percentPosition: true,
+	columnWidth: '.grid-sizer',
+
 });
 
-$grid.on( 'click', '.grid-item', function() {
-  // change size of item via class
-  $( this ).toggleClass('grid-item--gigante');
-  // trigger layout
-  $grid.masonry();
+// fancybox
+jQuery('.fancybox').fancybox({
+	buttons : [ 
+    'slideShow',
+    'share',
+    'zoom',
+    'fullScreen',
+    'close'
+  ],
+  thumbs : {
+    autoStart : true
+  }
 });
 
-
-	});
+});
 
 $(window).load(function(){
 	$('#loader').slideUp(1200);

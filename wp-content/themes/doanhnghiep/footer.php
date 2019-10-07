@@ -18,6 +18,7 @@
 <script src="<?php echo BASE_URL; ?>/js/masonry.pkgd.min.js"></script>
 <script src="<?php echo BASE_URL; ?>/js/bootstrap.min.js"></script>
 <script src="<?php echo BASE_URL; ?>/js/cube.js"></script>
+<script src="<?php echo BASE_URL; ?>/js/jquery.fancybox.min.js"></script>
 <script src="<?php echo BASE_URL; ?>/js/custom.js"></script>
 </body>
 </html>

@@ -2,27 +2,35 @@
 
   // ADD META BOX
 
-function status_event_dropdown(){
-    add_meta_box('tinh-trang-dropdown','Trạng thái dropdowns','tg_status_ouput_dropdown','post');
+function height_img_masonry(){
+  add_meta_box('height_img_masonry','Chiều cao ảnh','height_img_masonry_function',array('homepicture'));
 }
-add_action('add_meta_boxes','status_event_dropdown');
+add_action('add_meta_boxes','height_img_masonry');
 
-function tg_status_ouput_dropdown ( $post ) {
-?>
-          <?php 
+function height_img_masonry_function ( $post ) {
+  ?>
+  <?php 
         //get dropdown saved value
-        $selected = esc_attr(get_post_meta( $post->ID, '_multi_dropdown', true )); 
-        ?>
-   <select name="multi_dropdown" id="multi_dropdown" >
-            <option value="Vẫn đang diễn ra" <?php echo ($selected == "first_choice")?  'selected="selected"' : '' ?>> Vẫn đang diễn ra </option>
-            <option value="Hết thời hạn" <?php echo ($selected == "second_choice")?  'selected="selected"' : '' ?>> Hết thời hạn </option>
-    </select>
-<?php
+  $selected = esc_attr(get_post_meta( $post->ID, '_dropdown_img_height_event', true )); 
+  ?>
+  <select name="dropdown_height_img" id="dropdown_height_img" >
+    <option value="height-1" <?php echo selected( $selected, 'height-1' ); ?>> 300px</option>
+    <option value="height-12" <?php echo selected( $selected, 'height-12' ); ?>> 350px</option>
+    <option value="height-2" <?php echo selected( $selected, 'height-2' ); ?>> 400px</option>
+    <option value="height-23" <?php echo selected( $selected, 'height-23' ); ?>> 450px</option>
+    <option value="height-3" <?php echo selected( $selected, 'height-3' ); ?>> 500px</option>
+    <option value="height-34" <?php echo selected( $selected, 'height-34' ); ?>> 550px</option>
+    <option value="height-4" <?php echo selected( $selected, 'height-4' ); ?>> 600px</option>
+  </select>
+  <?php
 }
 
 function tg_save($post_id){
-  $status_event = sanitize_text_field($_POST['multi_dropdown']);
-  update_post_meta( $post_id, '_status_event', $status_event );
+  if(isset($_POST['dropdown_height_img'])){
+    $height_img_custom = sanitize_text_field($_POST['dropdown_height_img']);
+    update_post_meta( $post_id, '_dropdown_img_height_event', $height_img_custom );
+  }
+
 }
 add_action('save_post','tg_save');
 

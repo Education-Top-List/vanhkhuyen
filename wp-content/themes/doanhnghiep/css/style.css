@@ -117,9 +117,10 @@ input[type=number]::-webkit-outer-spin-button {
      z-index: 99;
      display: block;
      position: fixed;
-     top: 70px;
-     left: 60px;
+     top: 50px;
+     left: 24px;
      cursor: pointer;
+     z-index: 999999;
 }
  .icon_mobile_click i.fa{
      font-size: 30px;
@@ -133,16 +134,17 @@ input[type=number]::-webkit-outer-spin-button {
      position: fixed;
      top: 0;
      bottom: 0;
-     width:260px;
-     left:-260px;
-     background-color: #8cc63f;
+     width: 340px;
+     left: -340px;
+     background-color: #fff;
      -webkit-transition: -webkit-transform .3s ease;
      -moz-transition: -moz-transform .3s ease;
      -o-transition: -o-transform .3s ease;
-     transition: transform .3s ease;
-     z-index: 9999999;
+     transition: all 0.4s linear;
+     z-index: 99999;
      border-right: 1px solid #fff;
      overflow:auto;
+     padding: 130px 20px 0px 40px;
 }
  .bg_opacity{
         position: fixed;
@@ -166,9 +168,6 @@ input[type=number]::-webkit-outer-spin-button {
      z-index: -1;
      left: -260px;
 }
- .menu_show{
-     z-index: 9999999;
-}
  #menu_mobile_full .close_menu {
      padding: 10px;
      font-size: 20px;
@@ -186,7 +185,7 @@ input[type=number]::-webkit-outer-spin-button {
      z-index: 999;
 }
  #menu_mobile_full .mobile-menu {
-     margin: 55px 0px 0px 0px;
+     margin: -5px 0px 0px 0px;
 }
  #menu_mobile_full ul li:not(.menu-item-has-children){
      padding:0px;
@@ -205,8 +204,9 @@ input[type=number]::-webkit-outer-spin-button {
      border-bottom: 1px solid #fff;
 }
  #menu_mobile_full ul li a{
-     color: #fff;
+     color: #000;
      text-transform: uppercase;
+     font-weight: 700;
 }
  #menu_mobile_full ul li a:hover{
      text-decoration: none;
@@ -604,6 +604,13 @@ input[type=number]::-webkit-outer-spin-button {
      right: 20px;
 }
 /* CSS HEADER */
+.logo_dark{
+    display: none;
+}
+.toggle_menu_mobile{
+    left: 0px !important;
+}
+
  .logo_site{
      max-width: 200px;
      float: none;
@@ -611,8 +618,8 @@ input[type=number]::-webkit-outer-spin-button {
      margin: 10px 0px 10px 0px;
      position: fixed;
      top: 50px;
-     left: 12rem;
-     z-index: 999;
+     left: 10rem;
+     z-index: 999999;
 }
  .logo_site img{
      max-width: 100%;
@@ -2253,9 +2260,28 @@ background-color:black; }
 }
 
 /* ---- grid-item ---- */
+.tgcol-6 .grid-sizer , .tgcol-6  .grid-item{
+    width: 16.66%;
+}
+.tgcol-5 .grid-sizer , .tgcol-5  .grid-item{
+    width: 20%;
+}
+.tgcol-4 .grid-sizer , .tgcol-4  .grid-item{
+    width: 25%;
+}
+.tgcol-3 .grid-sizer , .tgcol-3  .grid-item{
+    width: 33.33%;
+}
 
-.grid-sizer,
-.grid-item { width: 20%; }
+.grid-sizer.w_initial ,.grid-item figure.w_initial { 
+    width: 20%; 
+}
+.grid-sizer.width-23 ,.grid-item figure.width-23 { 
+    width: 25%; 
+}
+.grid-sizer.width-3 ,.grid-item figure.width-3{
+    width: 33.33%;
+}
 .grid-item{
     margin: 0px 0px 30px 0px;
     padding: 0px 15px;
@@ -2263,18 +2289,34 @@ background-color:black; }
 .grid-item a img{
     display: none;
 }
-
+.archive_masonry .grid{
+    margin:0px 15px;
+}
 .grid-item figure{
     height: 300px;
-    background-size: cover !important;
-    background-position: center center !important;
-    background-repeat: no-repeat !important;
     position: relative;
+    overflow: hidden;
+}
+.grid-item figure::before{
+    content:"";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    z-index: 2;
+}
+.grid-item figure:hover::before{
+    opacity: 1;
+    visibility: visible;
 }
 .grid-item figure a{
     position: absolute;
     width: 100%;
     height: 100%;
+    z-index: 2;
 }
 figure.height-1{
   height: 300px;
@@ -2305,4 +2347,76 @@ figure.height-4{
 }
 .fancybox-bg {
     background: #fff;
+}
+
+.photo {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    transition: transform .5s ease-out;
+    transform: scale(1);
+}
+.grid-item figure:hover .photo{
+   transform: scale(1.1); 
+}
+.grid-item figure svg{
+        margin: 0px;
+        fill: #fff;
+        -moz-transform: scale(0, 0);
+        -ms-transform: scale(0, 0);
+        -webkit-transform: scale(0, 0);
+        transform: scale(0,0);
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        transition: all 0.3s;
+        z-index: 3;
+}
+.grid-item figure:hover svg{
+    transform: scale(1);
+}
+.ham {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 400ms;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.hamRotate.active {
+  transform: rotate(45deg);
+}
+.hamRotate180.active {
+  transform: rotate(180deg);
+}
+.line {
+  fill:none;
+  transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
+  stroke:#fff;
+  stroke-width:5.5;
+  stroke-linecap:round;
+}
+.linedark{
+    stroke: #000 !important;
+}
+.ham1 .top {
+  stroke-dasharray: 40 139;
+}
+.ham1 .bottom {
+  stroke-dasharray: 40 180;
+}
+.ham1.active .top {
+  stroke-dashoffset: -98px;
+  stroke: #000 !important;
+}
+.ham1.active .bottom {
+  stroke-dashoffset: -138px;
+  stroke: #000 !important;
+}
+.ham1.active .middle{
+    stroke: #000 !important;
 }

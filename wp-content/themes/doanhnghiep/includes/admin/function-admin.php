@@ -1,19 +1,15 @@
 <?php
 add_action('admin_menu', 'ch_essentials_admin');
 function ch_essentials_admin() {
-
 	register_setting('zang-settings-header', 'phone');
 	register_setting('zang-settings-socials', 'footer_fb');
 	register_setting('zang-settings-socials', 'footer_twitter');
 	register_setting('zang-settings-socials', 'footer_ggplus');
 	register_setting('zang-settings-socials', 'footer_insta');
-	// Commit index
-	register_setting('zang-settings-commit', 'idx_commit_title_one');
-	register_setting('zang-settings-commit', 'idx_commit_desc_one');
-	register_setting('zang-settings-commit', 'idx_commit_title_two');
-	register_setting('zang-settings-commit', 'idx_commit_desc_two');
-	register_setting('zang-settings-commit', 'idx_commit_title_three');
-	register_setting('zang-settings-commit', 'idx_commit_desc_three');
+
+	/* Regist Masonry Option */
+	register_setting('zang-settings-col-msrpage', 'homepicture');
+
 	/* Base Menu */
 	add_menu_page('Zang Theme Option','ZQ Framework','manage_options','template_admin_zang','zang_theme_create_page',get_template_directory_uri() . '/images/setting_icon.png',110);
 }
@@ -31,14 +27,9 @@ function zang_custom_settings() {
 	add_settings_field('ggplus','Google Plus Link', 'zang_footer_ggplus','zang-settings-socials', 'zang-social-options');
 	add_settings_field('insta','Instagram Link', 'zang_footer_insta','zang-settings-socials', 'zang-social-options');
 
-	/* Commit Options Section */
-	add_settings_section('zang-commit-options','Chỉnh sửa cam kết trang chủ','zang_commit_options_callback','zang-settings-commit');
-	add_settings_field('idx-commit-title-one','Cam kết 1','zang_commit_title_one', 'zang-settings-commit','zang-commit-options');
-	add_settings_field('idx-commit-desc-one','','zang_commit_desc_one', 'zang-settings-commit','zang-commit-options');
-	add_settings_field('idx-commit-title-two','Cam kết 2','zang_commit_title_two', 'zang-settings-commit','zang-commit-options');
-	add_settings_field('idx-commit-desc-two','','zang_commit_desc_two', 'zang-settings-commit','zang-commit-options');
-	add_settings_field('idx-commit-title-three','Cam kết 3','zang_commit_title_three', 'zang-settings-commit','zang-commit-options');
-	add_settings_field('idx-commit-desc-three','','zang_commit_desc_three', 'zang-settings-commit','zang-commit-options');
+	/* Col Masonry Options Section */
+	add_settings_section('zang-colsmr-options','Chỉnh sửa số cột hiển thị các trang','zang_colsmr_options_callback','zang-settings-col-msrpage' );
+	add_settings_field('homept','Ảnh Gia Đình', 'msr_homepicture','zang-settings-col-msrpage', 'zang-colsmr-options');
 }
 
 function zang_header_options_callback(){
@@ -49,7 +40,7 @@ function zang_social_options_callback(){
 	echo '';
 }
 
-function zang_commit_options_callback(){
+function zang_colsmr_options_callback(){
 	echo '';
 }
 
@@ -75,34 +66,17 @@ function zang_footer_insta(){
 	echo '<input type="text" class="iptext_adm" name="footer_insta" value="'.$footer_insta.'" placeholder="" ';
 }
 
-function zang_commit_title_one(){
-	$idx_commit_title_one = esc_attr(get_option('idx_commit_title_one'));
-	echo '<input type="text" class="iptext_adm" name="idx_commit_title_one" value="'.$idx_commit_title_one.'" >';
-};
-
-function zang_commit_desc_one(){
-	$idx_commit_desc_one = esc_attr(get_option('idx_commit_desc_one'));
-	echo '<input type="text" class="iptext_adm" name="idx_commit_desc_one" value="'.$idx_commit_desc_one.'" >';
-}
-
-function zang_commit_title_two(){
-	$idx_commit_title_two = esc_attr(get_option('idx_commit_title_two'));
-	echo '<input type="text" class="iptext_adm" name="idx_commit_title_two" value="'.$idx_commit_title_two.'" >';
-};
-
-function zang_commit_desc_two(){
-	$idx_commit_desc_two = esc_attr(get_option('idx_commit_desc_two'));
-	echo '<input type="text" class="iptext_adm" name="idx_commit_desc_two" value="'.$idx_commit_desc_two.'" >';
-}
-
-function zang_commit_title_three(){
-	$idx_commit_title_three = esc_attr(get_option('idx_commit_title_three'));
-	echo '<input type="text" class="iptext_adm" name="idx_commit_title_three" value="'.$idx_commit_title_three.'" >';
-};
-
-function zang_commit_desc_three(){
-	$idx_commit_desc_three = esc_attr(get_option('idx_commit_desc_three'));
-	echo '<input type="text" class="iptext_adm" name="idx_commit_desc_three" value="'.$idx_commit_desc_three.'" >';
+/* masonry page function */
+function msr_homepicture(){
+	$options = get_option('homepicture');
+	$items = array("tgcol-3","tgcol-4","tgcol-5","tgcol-6");
+	$numsItem = array("3","4","5","6");
+	echo "<select id='dropdown_homept' name='homepicture[dropdown_homept]'>";
+	foreach($items as $index => $item) {
+		$selected = ($options['dropdown_homept']==$item) ? 'selected="selected"' : '';
+		echo "<option value='$item' $selected>".$numsItem[$index]." cột</option>";
+	}
+	echo "</select>";
 }
 
 
@@ -140,10 +114,11 @@ function zang_theme_create_page() {
 		<?php settings_errors(); ?>  
 
 		<?php  
-		$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'header_page_options';  
+		$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'col_page_options';  
 		?>  
 
 		<ul class="nav-tab-wrapper"> 
+		<li><a href="?page=template_admin_zang&tab=col_page_options" class="nav-tab <?php echo $active_tab == 'col_page_options' ? 'nav-tab-active' : ''; ?>">Column Masonry Pages</a></li>	
 		<li><a href="?page=template_admin_zang&tab=header_page_options" class="nav-tab <?php echo $active_tab == 'header_page_options' ? 'nav-tab-active' : ''; ?>">Header</a> </li>
 		<li><a href="?page=template_admin_zang&tab=social_page_options" class="nav-tab <?php echo $active_tab == 'social_page_options' ? 'nav-tab-active' : ''; ?>">Social Footer</a></li>	
 		</ul>  
@@ -156,6 +131,10 @@ function zang_theme_create_page() {
 			} else if( $active_tab == 'social_page_options' ) {
 				settings_fields( 'zang-settings-socials' );
 				do_settings_sections( 'zang-settings-socials' ); 
+			}
+			else if( $active_tab == 'col_page_options' ) {
+				settings_fields( 'zang-settings-col-msrpage' );
+				do_settings_sections( 'zang-settings-col-msrpage' ); 
 			}
 			?>             
 			<?php submit_button(); ?>  

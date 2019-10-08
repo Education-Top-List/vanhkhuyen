@@ -19,9 +19,6 @@ $args = array(
   'order' => 'ASC'
 );
 $loop_slide = new WP_Query( $args ); 
-
-
-
 while ( $loop_slide->have_posts() ) : $loop_slide->the_post(); 
   ?>
    <?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' ); ?>

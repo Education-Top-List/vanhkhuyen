@@ -13,15 +13,21 @@ function height_img_masonry_function ( $post ) {
         //get dropdown saved value
   $selected = esc_attr(get_post_meta( $post->ID, '_dropdown_img_height_event', true )); 
   ?>
-  <select name="dropdown_height_img" id="dropdown_height_img" >
-    <option value="height-1" <?php echo selected( $selected, 'height-1' ); ?>> 300px</option>
-    <option value="height-12" <?php echo selected( $selected, 'height-12' ); ?>> 350px</option>
-    <option value="height-2" <?php echo selected( $selected, 'height-2' ); ?>> 400px</option>
-    <option value="height-23" <?php echo selected( $selected, 'height-23' ); ?>> 450px</option>
-    <option value="height-3" <?php echo selected( $selected, 'height-3' ); ?>> 500px</option>
-    <option value="height-34" <?php echo selected( $selected, 'height-34' ); ?>> 550px</option>
-    <option value="height-4" <?php echo selected( $selected, 'height-4' ); ?>> 600px</option>
-  </select>
+  <div class="custom_width_h_img">
+    <div class="item_custom_wh">
+      <label>Chiều cao ảnh</label>
+      <select name="dropdown_height_img" id="dropdown_height_img" >
+        <option value="height-1" <?php echo selected( $selected, 'height-1' ); ?>> 300px</option>
+        <option value="height-12" <?php echo selected( $selected, 'height-12' ); ?>> 350px</option>
+        <option value="height-2" <?php echo selected( $selected, 'height-2' ); ?>> 400px</option>
+        <option value="height-23" <?php echo selected( $selected, 'height-23' ); ?>> 450px</option>
+        <option value="height-3" <?php echo selected( $selected, 'height-3' ); ?>> 500px</option>
+        <option value="height-34" <?php echo selected( $selected, 'height-34' ); ?>> 550px</option>
+        <option value="height-4" <?php echo selected( $selected, 'height-4' ); ?>> 600px</option>
+      </select>
+    </div>
+  </div>
+
   <?php
 }
 

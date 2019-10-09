@@ -117,10 +117,12 @@ input[type=number]::-webkit-outer-spin-button {
      z-index: 99;
      display: block;
      position: fixed;
-     top: 50px;
+     top: 49px;
      left: 24px;
      cursor: pointer;
      z-index: 999999;
+     width: 60px;
+     height: 50px;
 }
  .icon_mobile_click i.fa{
      font-size: 30px;
@@ -147,22 +149,14 @@ input[type=number]::-webkit-outer-spin-button {
      padding: 130px 20px 0px 40px;
 }
  .bg_opacity{
-        position: fixed;
+    position: fixed;
+    width: 0px;
+    background: rgba(0,0,0,0.5);
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    -moz-transform: scaleX(0);
-    -ms-transform: scaleX(0);
-    -webkit-transform: scaleX(0);
-    transform: scaleX(0);
-    -moz-transform-origin: 0 0;
-    -ms-transform-origin: 0 0;
-    -webkit-transform-origin: 0 0;
-    transform-origin: 0 0;
-    z-index: 39;
-    background: rgba(21,21,21,0.5);
-     
+    bottom: 0;
+    z-index: 99;
+    display: none;
+    transition: all 2s linear;
 }
  .menu_hidden{
      z-index: -1;
@@ -617,8 +611,8 @@ input[type=number]::-webkit-outer-spin-button {
      transition: all 0.3s;
      margin: 10px 0px 10px 0px;
      position: fixed;
-     top: 50px;
-     left: 10rem;
+     top: 40px;
+     left: 90px;
      z-index: 999999;
 }
  .logo_site img{
@@ -2163,10 +2157,10 @@ line-height: 23px;
 
 .progress {
       position: fixed;
-      height: 2px;
+      height: 4px;
       display: block;
       width: 100%;
-      background-color: white;
+      background-color: red;
       border-radius: 2px;
       background-clip: padding-box;
       margin: 0px !important;
@@ -2378,45 +2372,60 @@ background-size: cover !important;
 .grid-item figure:hover svg{
     transform: scale(1);
 }
-.ham {
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  transition: transform 400ms;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-.hamRotate.active {
-  transform: rotate(45deg);
-}
-.hamRotate180.active {
-  transform: rotate(180deg);
-}
-.line {
-  fill:none;
-  transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
-  stroke:#fff;
-  stroke-width:5.5;
-  stroke-linecap:round;
-}
-.linedark{
-    stroke: #000 !important;
-}
-.ham1 .top {
-  stroke-dasharray: 40 139;
-}
-.ham1 .bottom {
-  stroke-dasharray: 40 180;
-}
-.ham1.active .top {
-  stroke-dashoffset: -98px;
-  stroke: #000 !important;
-}
-.ham1.active .bottom {
-  stroke-dashoffset: -138px;
-  stroke: #000 !important;
-}
-.ham1.active .middle{
-    stroke: #000 !important;
-}
+      .icon_mobile_click label {
+            display: block;
+            cursor: pointer;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            max-width: 60px;
+            max-height: 40px;
+            margin: 0px;
+        }
+         .icon_mobile_click input{
+            display: none;
+         }
+        path {
+            fill: none;
+            stroke: #ffffff;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            --length: 24;
+            --offset: -38;
+            stroke-dasharray: var(--length) var(--total-length);
+            stroke-dashoffset: var(--offset);
+            transition: all .8s cubic-bezier(.645, .045, .355, 1);
+        }
+
+
+        .cross input:checked+svg .line--1,
+        .cross input:checked+svg .line--3 {
+            --length: 22.627416998;
+
+        }
+
+        .cross input:checked+svg .line--2 {
+            --length: 0;
+        }
+
+
+        .menu--1 .line--1,
+        .menu--1 .line--3 {
+            --total-length: 126.64183044433594;
+        }
+
+        .menu--1 .line--2 {
+            --total-length: 70;
+        }
+
+        .menu--1 input:checked+svg .line--1,
+        .menu--1 input:checked+svg .line--3 {
+            --offset: -94.1149185097;
+            stroke: #000;
+        }
+
+        .menu--1 input:checked+svg .line--2 {
+            --offset: -50;
+            stroke: #000;
+        }

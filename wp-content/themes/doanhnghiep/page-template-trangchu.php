@@ -23,8 +23,9 @@ while ( $loop_slide->have_posts() ) : $loop_slide->the_post();
   ?>
    <?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' ); ?>
     <div class="slider3d__item"  style="background:url('<?php echo $image[0]; ?>');">
-          <h2 class="slider3d__heading" data-text="<?php echo the_title(); ?>"><a href="<?php the_permalink(); ?>"><?php echo the_title(); ?></a> </h2>
+          <h2 class="slider3d__heading" data-text="<?php echo the_title(); ?>"><?php echo the_title(); ?> </h2>
         </div>
+
     <?php
 endwhile;
 wp_reset_postdata(); 
@@ -37,10 +38,15 @@ wp_reset_postdata();
     <div class="slider3d__handle">
       <div class="slider3d__handle__inner">
         <div class="slider3d__handle__rotater">
-          <div class="slider3d__handle__item active">Page 1</div>
-          <div class="slider3d__handle__item">Page 2</div>
-          <div class="slider3d__handle__item">Page 3</div>
-          <div class="slider3d__handle__item">Page 4</div>
+<?php 
+  while ( $loop_slide->have_posts() ) : $loop_slide->the_post(); 
+  ?>
+   <?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' ); ?>
+          <div class="slider3d__handle__item" style="background:url('<?php echo $image[0]; ?>');"></div>
+              <?php
+endwhile;
+wp_reset_postdata(); 
+?>
         </div>
       </div>
     </div>

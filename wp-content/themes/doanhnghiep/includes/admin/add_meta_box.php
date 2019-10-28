@@ -3,7 +3,7 @@
   // ADD META BOX
 
 function height_img_masonry(){
-  add_meta_box('height_img_masonry','Chiều cao ảnh','height_img_masonry_function',array('homepicture'));
+  add_meta_box('height_img_masonry','Chiều cao ảnh','height_img_masonry_function',array('homepicture','printadv','foodpicture'));
 }
 add_action('add_meta_boxes','height_img_masonry');
 

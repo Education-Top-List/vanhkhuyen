@@ -22,6 +22,7 @@
 
 
 <body <?php body_class() ?>>
+ 
 	<div class="bg_opacity"></div>
 	
 		<div id="menu_mobile_full">

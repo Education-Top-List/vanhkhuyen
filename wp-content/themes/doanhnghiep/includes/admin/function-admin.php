@@ -9,6 +9,8 @@ function ch_essentials_admin() {
 
 	/* Regist Masonry Option */
 	register_setting('zang-settings-col-msrpage', 'homepicture');
+	register_setting('zang-settings-col-msrpage', 'printadv');
+	register_setting('zang-settings-col-msrpage', 'foodpicture');
 
 	/* Base Menu */
 	add_menu_page('Zang Theme Option','ZQ Framework','manage_options','template_admin_zang','zang_theme_create_page',get_template_directory_uri() . '/images/setting_icon.png',110);
@@ -30,6 +32,8 @@ function zang_custom_settings() {
 	/* Col Masonry Options Section */
 	add_settings_section('zang-colsmr-options','Chỉnh sửa số cột hiển thị các trang','zang_colsmr_options_callback','zang-settings-col-msrpage' );
 	add_settings_field('homept','Ảnh Gia Đình', 'msr_homepicture','zang-settings-col-msrpage', 'zang-colsmr-options');
+	add_settings_field('printadv','Ấn Phẩm Quảng Cáo', 'msr_printadv','zang-settings-col-msrpage', 'zang-colsmr-options');
+	add_settings_field('foodpicture','Ấn Đồ Ăn', 'msr_foodpicture','zang-settings-col-msrpage', 'zang-colsmr-options');
 }
 
 function zang_header_options_callback(){
@@ -78,7 +82,29 @@ function msr_homepicture(){
 	}
 	echo "</select>";
 }
+function msr_printadv(){
+	$options = get_option('printadv');
+	$items = array("tgcol-3","tgcol-4","tgcol-5","tgcol-6");
+	$numsItem = array("3","4","5","6");
+	echo "<select id='dropdown_printadv' name='printadv[dropdown_printadv]'>";
+	foreach($items as $index => $item) {
+		$selected = ($options['dropdown_printadv']==$item) ? 'selected="selected"' : '';
+		echo "<option value='$item' $selected>".$numsItem[$index]." cột</option>";
+	}
+	echo "</select>";
+}
 
+function msr_foodpicture(){
+	$options = get_option('foodpicture');
+	$items = array("tgcol-3","tgcol-4","tgcol-5","tgcol-6");
+	$numsItem = array("3","4","5","6");
+	echo "<select id='dropdown_foodpt' name='foodpicture[dropdown_foodpt]'>";
+	foreach($items as $index => $item) {
+		$selected = ($options['dropdown_foodpt']==$item) ? 'selected="selected"' : '';
+		echo "<option value='$item' $selected>".$numsItem[$index]." cột</option>";
+	}
+	echo "</select>";
+}
 
 function myshortcode(){
 	ob_start();
